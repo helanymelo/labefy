@@ -4,8 +4,9 @@ import { ContainerInput, MusicName } from "./StylePlaylist";
 import {FaTrash} from "react-icons/fa"
 import { Link } from "react-router-dom";
 import { BallTriangle } from "react-loader-spinner";
+import TrackDetail from "../TrackDetail/TrackDetail";
 
-function Playlist() {
+function Playlist(props) {
   const[getPlaylist, setGetPlaylist]=useState([])
   const [load, setLoad]=useState(false)
   const [inputName, setInPutName]=useState('')
@@ -103,7 +104,7 @@ function Playlist() {
 
   return (
     <ContainerInput>
-     
+ 
       <Link to="/">Voltar</Link>
       <h1>Criar Playlist</h1>
       
@@ -114,14 +115,11 @@ function Playlist() {
           return(                                   
             <MusicName key={item.id}>              
               <span>{item.name}</span>
-              <span><Link to={`/playlist/${item.name}`}>Ver Mais</Link></span>
+              <span><Link to={`/playlist/${item.id}`}>Ver Mais</Link></span>
               <FaTrash onClick={()=>deletePlaylist(item.id)}/>                            
             </MusicName>
-          )
-        })}     
-      
-      
-     
+          )          
+        })}      
        </ContainerInput>
   )
 }
