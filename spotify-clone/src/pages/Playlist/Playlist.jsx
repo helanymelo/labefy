@@ -106,7 +106,7 @@ function Playlist(props) {
     <ContainerInput>
  
       <Link to="/">Voltar</Link>
-      <h1>Criar Playlist</h1>
+      <h1>CRIAR PLAYLIST</h1>
       
       <input placeholder="Nome da Playlist" value={inputName} onChange={(e)=>setInPutName(e.  target.value)}/>
       <button onClick={()=>createPlaylist()}>CRIAR</button> 
@@ -119,7 +119,8 @@ function Playlist(props) {
               <FaTrash onClick={()=>deletePlaylist(item.id)}/>                            
             </MusicName>
           )          
-        })}      
+        })}
+          
        </ContainerInput>
   )
 }

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import {TrackContainer} from './StyleTrackDetail'
 import axios from 'axios'
 
 
 
 
-function TrackDetail() {
+function TrackDetail(props) {
   const [trackName, setTrackName]=useState('')
   const [trackArtist, setTrackArtist]=useState('')
   const [trackUrl, setTrackUrl]=useState('')
@@ -52,9 +52,26 @@ function TrackDetail() {
         Authorization:'helany-melo'
       }
     }).then((res)=>{
-      console.log(res.data)
+      console.log(res.data)      
       getTrack()
+      setTrackName(' ')
+      setTrackArtist(' ')
+      setTrackUrl(' ')
     })
+  }
+
+
+  const deleteTrack=(trackId)=>{
+    axios.delete(`https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/${id}/tracks/${trackId}`,{
+      headers:{
+        Authorization:'helany-melo'
+      }
+        }).then((res)=>{
+            alert("Playlist deletada com sucesso")
+            getTrack()            
+     
+        })
+    
   }
 
   
@@ -62,7 +79,10 @@ function TrackDetail() {
 
   return (
     <TrackContainer >
-        <h2>Adicione uma nova música na sua playlist</h2>
+        
+        <Link to='/playlist'>Voltar</Link>
+        
+        <h2>Adicione uma nova música na sua playlist {name}</h2>
         <input 
           placeholder='Nome da música'
           value={trackName}
@@ -85,6 +105,7 @@ function TrackDetail() {
               <div key={item.id}>
               
               <p>{item.name}</p>
+              <button onClick={()=>deleteTrack(item.id)}>Deletar</button>
               </div>
               
             )
