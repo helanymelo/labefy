@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import {TrackContainer} from './StyleTrackDetail'
+import {TrackContainer, ContainerInfo} from './StyleTrackDetail'
 import axios from 'axios'
+import {toast} from "react-toastify"
+import {FaTrash} from "react-icons/fa"
 
 
 
 
-function TrackDetail(props) {
+function TrackDetail() {
   const [trackName, setTrackName]=useState('')
   const [trackArtist, setTrackArtist]=useState('')
   const [trackUrl, setTrackUrl]=useState('')
@@ -17,8 +19,7 @@ function TrackDetail(props) {
  const {id}=useParams()
 
  
-
-
+ 
 
   const getTrack = ()=>{
     const playlist=`https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/${id}/tracks`;
@@ -31,17 +32,19 @@ function TrackDetail(props) {
       console.log(res.data.result.tracks)
       setMusic(res.data.result.tracks)
       
-    }) 
+    }).catch((err)=>{
+     
+    })
   }
 
   useEffect(()=>{
     getTrack()
   },[])
 
-  const addTrackToPlaylist=()=>{    
-    const api = `https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/${id}/tracks`;
-
  
+
+  const addTrackToPlaylist=()=>{      
+    const api =`https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/${id}/tracks`;    
     const body ={
       name: trackName,
       artist: trackArtist,
@@ -51,14 +54,26 @@ function TrackDetail(props) {
       headers:{
         Authorization:'helany-melo'
       }
-    }).then((res)=>{
-      console.log(res.data)      
-      getTrack()
+    }).then((res)=>{        
+      getTrack()      
+      toast.success('Música adicionanda com sucesso!')
       setTrackName(' ')
       setTrackArtist(' ')
       setTrackUrl(' ')
-    })
+
+      
+    }).catch((err)=>{      
+      if(!trackName || !trackArtist || !trackUrl){
+        toast.warn('Preencha todos os campos!')
+        return   
+      }else if(trackName === trackName){
+        return
+      }
+      
+     
+    })   
   }
+
 
 
   const deleteTrack=(trackId)=>{
@@ -67,22 +82,23 @@ function TrackDetail(props) {
         Authorization:'helany-melo'
       }
         }).then((res)=>{
-            alert("Playlist deletada com sucesso")
+            toast.warn("Playlist deletada com sucesso")
             getTrack()            
      
         })
     
   }
 
+
+
   
 
 
   return (
-    <TrackContainer >
-        
+    <TrackContainer>        
         <Link to='/playlist'>Voltar</Link>
         
-        <h2>Adicione uma nova música na sua playlist {name}</h2>
+        <h2>ADICIONE UMA MÚSICA À SUA PLAYLIST :)</h2>
         <input 
           placeholder='Nome da música'
           value={trackName}
@@ -102,12 +118,10 @@ function TrackDetail(props) {
         <div>
           {music.map((item)=>{
             return(
-              <div key={item.id}>
-              
-              <p>{item.name}</p>
-              <button onClick={()=>deleteTrack(item.id)}>Deletar</button>
-              </div>
-              
+              <ContainerInfo key={item.id}>                             
+                  <span>{item.name.toUpperCase()}</span>
+                  <span><FaTrash onClick={()=>deleteTrack(item.id)}/> </span>                
+              </ContainerInfo>  
             )
           })}
         </div>
