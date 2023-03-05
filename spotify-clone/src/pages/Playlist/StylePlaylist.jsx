@@ -24,24 +24,25 @@ h1{
 
 
 input{
-    width:400px ;
+    width:600px ;
     height:5vh ;
     border-radius:8px ;
     text-align: center;
     margin-bottom:1em ;
     font-size:1.6em ;
-    border-image: linear-gradient(20deg,red,blue) 10;
+    
     outline:none ;
     
 }
 
 button{
-    width:412px ;
+    width:602px ;
     font-size: 1.2rem;
     background-image:linear-gradient(20deg, red, blue);
     border: none;
     outline:none ;
     color: #fff;
+    margin-bottom:1em ;
 }
 
 button:hover{
@@ -51,8 +52,8 @@ button:hover{
 
 export const MusicName = styled.div`
     display:flex ;
-    justify-content:space-between;
-    width:18vw ;
+    justify-content:space-between ;
+    width:30vw ;
     padding-top: 2em;
     border-bottom: 1px solid #fff;
 
@@ -60,6 +61,7 @@ export const MusicName = styled.div`
 span{
     font-size:1.6em ;
     color:#fff ;
+   
     
    
 }
@@ -67,6 +69,7 @@ span{
 span a{
     color: #ddd;
     text-align:right ;
+    margin-right:1.2em ;
 }
 
 
@@ -82,6 +85,6 @@ svg:hover{
     color:#eee;
     border-image: linear-gradient(20deg,red,blue) 10;
 }
-
+ 
 
 `

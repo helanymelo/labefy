@@ -3,7 +3,9 @@ import React, {useEffect, useState} from 'react'
 import { ContainerInput, MusicName } from "./StylePlaylist";
 import {FaTrash} from "react-icons/fa"
 import { Link } from "react-router-dom";
-import { BallTriangle } from "react-loader-spinner";
+import {toast} from "react-toastify"
+import ReactPlayer from 'react-player'
+
 
 function Playlist() {
   const[getPlaylist, setGetPlaylist]=useState([])
@@ -39,14 +41,16 @@ function Playlist() {
   showPlaylist()
  },[])
 
+
+
   const deletePlaylist = (id)=>{
     axios.delete(`https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/${id}`,{
       headers:{
         Authorization:'helany-melo'
       }
         }).then((res)=>{
-            alert("Playlist deletada com sucesso")
-            showPlaylist()
+            toast.warn("Playlist deletada com sucesso")
+            showPlaylist()  
                        
         }).catch((err)=>{
           console.log(err.message)
@@ -57,7 +61,7 @@ function Playlist() {
 
     function createPlaylist(){
       if(!inputName){
-        alert('Digite o nome da sua playlist :)')
+        toast.warn('Digite o nome da sua playlist :)')
         return
       }
      
@@ -70,7 +74,7 @@ function Playlist() {
           Authorization:'helany-melo'
         }
       }).then((res)=>{        
-          alert('Playlist Cadastrada com sucesso!')    
+          toast.success('Playlist Cadastrada com sucesso!')    
           showPlaylist()     
           setInPutName('')
          
@@ -79,7 +83,7 @@ function Playlist() {
       }).catch((err)=>{
          console.log("Erro")
          if(inputName === inputName){
-          alert('Você já tem uma playlist com esse nome!')
+          toast.error('Você já tem uma playlist com esse nome!')
           setInPutName('')
           return  
       
@@ -103,9 +107,9 @@ function Playlist() {
 
   return (
     <ContainerInput>
-     
+ 
       <Link to="/">Voltar</Link>
-      <h1>Criar Playlist</h1>
+      <h1>CRIAR PLAYLIST</h1>
       
       <input placeholder="Nome da Playlist" value={inputName} onChange={(e)=>setInPutName(e.  target.value)}/>
       <button onClick={()=>createPlaylist()}>CRIAR</button> 
@@ -114,14 +118,15 @@ function Playlist() {
           return(                                   
             <MusicName key={item.id}>              
               <span>{item.name}</span>
-              <span><Link to={`/playlist/${item.name}`}>Ver Mais</Link></span>
-              <FaTrash onClick={()=>deletePlaylist(item.id)}/>                            
+              <div>
+                <span><Link to={`/playlist/${item.id}`}>Ver Mais</Link></span>
+                <FaTrash onClick={()=>deletePlaylist(item.id)}/>    
+              </div>                        
             </MusicName>
-          )
-        })}     
-      
-      
-     
+          )          
+        })}
+    
+          
        </ContainerInput>
   )
 }
