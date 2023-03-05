@@ -4,7 +4,8 @@ import {TrackContainer, ContainerInfo} from './StyleTrackDetail'
 import axios from 'axios'
 import {toast} from "react-toastify"
 import {FaTrash} from "react-icons/fa"
-
+import {IoPlay} from "react-icons/io5"
+import ReactPlayer from 'react-player/youtube'
 
 
 
@@ -55,11 +56,15 @@ function TrackDetail() {
         Authorization:'helany-melo'
       }
     }).then((res)=>{        
-      getTrack()      
+      getTrack() 
       toast.success('Música adicionanda com sucesso!')
+      
       setTrackName(' ')
       setTrackArtist(' ')
       setTrackUrl(' ')
+      return
+      
+      
 
       
     }).catch((err)=>{      
@@ -109,8 +114,8 @@ function TrackDetail() {
           value={trackArtist}
           onChange={(e)=>setTrackArtist(e.target.value)}
           />
-        <input 
-          placeholder='URL'
+        <input
+          placeholder='URL DO YOUTUBE'
           value={trackUrl}
           onChange={(e)=>setTrackUrl(e.target.value)}
           /> 
@@ -119,8 +124,20 @@ function TrackDetail() {
           {music.map((item)=>{
             return(
               <ContainerInfo key={item.id}>                             
-                  <span>{item.name.toUpperCase()}</span>
-                  <span><FaTrash onClick={()=>deleteTrack(item.id)}/> </span>                
+                  <span> 
+                                      
+                    {item.name.toUpperCase()}
+                    <ReactPlayer 
+                      width='400px' 
+                      height='50px' 
+                      url={item.url} 
+                      playing={false} 
+                      controls={true}                      
+                    />              
+                  </span>
+                  
+                  <span><FaTrash onClick={()=>deleteTrack(item.id)}/> </span>  
+                          
               </ContainerInfo>  
             )
           })}

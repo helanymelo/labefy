@@ -7,7 +7,7 @@ export const TrackContainer = styled.div`
     height:100vh ;
     align-items:center ;
     padding-top:3em ;
-    background-color:#000 ;
+   background-color:#000;
 
 h2{
     color:#fff ;

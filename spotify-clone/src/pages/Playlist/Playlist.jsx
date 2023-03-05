@@ -4,6 +4,7 @@ import { ContainerInput, MusicName } from "./StylePlaylist";
 import {FaTrash} from "react-icons/fa"
 import { Link } from "react-router-dom";
 import {toast} from "react-toastify"
+import ReactPlayer from 'react-player'
 
 
 function Playlist() {
@@ -124,6 +125,7 @@ function Playlist() {
             </MusicName>
           )          
         })}
+    
           
        </ContainerInput>
   )

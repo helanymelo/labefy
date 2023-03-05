@@ -12,6 +12,7 @@ function Home() {
       <Button>
         <Link to="/playlist">Playlist</Link>
       </Button>
+         
     </Container>
   )
 }
